@@ -1,0 +1,97 @@
+{
+  "id": "com.universaltill.export-mtd-uk",
+  "name": "UK MTD VAT return (HMRC sandbox)",
+  "version": "1.0.0",
+  "description": "A sandbox-only Making Tax Digital (MTD) VAT return bridge for UK shops: Box 1 and Box 6 computed from archived day-closes, the remaining boxes merchant-entered, submitted server-to-server to HMRC's test API. Install it by choice; it is never installed automatically. It cannot send a real return to HMRC yet.",
+  "author": "Universal Till",
+  "website": "https://universaltill.com",
+  "canonical_type": "export",
+  "runtime": "wasm",
+  "device_arch": "any",
+  "min_pos_version": "0.30.11",
+  "countries": [
+    "GB"
+  ],
+  "markets": [
+    "GB"
+  ],
+  "permissions": [
+    "events:receive",
+    "sales:read",
+    "net:test-api.service.hmrc.gov.uk",
+    "storage"
+  ],
+  "locales": [
+    "en-GB"
+  ],
+  "entries": [
+    {
+      "type": "export",
+      "key": "mtd-vat-return-uk",
+      "label": "mtd_uk.entry_label",
+      "sort_order": 10,
+      "entities": [
+        "eod_closes"
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "key": "hmrc_client_id",
+      "default_value": "",
+      "scope": "global"
+    },
+    {
+      "key": "hmrc_client_secret",
+      "default_value": "",
+      "scope": "global"
+    },
+    {
+      "key": "hmrc_refresh_token",
+      "default_value": "",
+      "scope": "global"
+    },
+    {
+      "key": "hmrc_vrn",
+      "default_value": "",
+      "scope": "global"
+    },
+    {
+      "key": "hmrc_api_base",
+      "default_value": "https://test-api.service.hmrc.gov.uk",
+      "scope": "global"
+    },
+    {
+      "key": "hmrc_box2_vat_due_acquisitions",
+      "default_value": "",
+      "scope": "global"
+    },
+    {
+      "key": "hmrc_box4_vat_reclaimed",
+      "default_value": "",
+      "scope": "global"
+    },
+    {
+      "key": "hmrc_box7_purchases_ex_vat",
+      "default_value": "",
+      "scope": "global"
+    },
+    {
+      "key": "hmrc_box8_goods_supplied_ex_vat",
+      "default_value": "",
+      "scope": "global"
+    },
+    {
+      "key": "hmrc_box9_acquisitions_ex_vat",
+      "default_value": "",
+      "scope": "global"
+    }
+  ],
+  "entrypoint": "./bin/plugin.wasm",
+  "hooks": [
+    {
+      "event": "export.requested.ask",
+      "action": "export.mtd_vat"
+    }
+  ]
+}
